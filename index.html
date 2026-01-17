@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- PDF.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     
     <style>
         body {
@@ -63,84 +61,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* PDF 按鈕特效 */
-        .pdf-btn-bg {
-            background-image: url('https://github.com/Xiaowei6636/art-entry-115/blob/main/unnamed.png?raw=true');
-            background-size: cover;
-            background-position: center;
-            filter: blur(6px) brightness(0.7);
-            transition: all 0.3s ease;
-        }
-        
-        .pdf-trigger:hover .pdf-btn-bg {
-            filter: blur(3px) brightness(0.5);
-            transform: scale(1.05);
-        }
-
-        /* Modal 動畫 */
-        .modal {
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease-in-out;
-        }
-        
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            transform: scale(0.95);
-            transition: all 0.3s ease-in-out;
-        }
-        
-        .modal.active .modal-content {
-            transform: scale(1);
-        }
-
-        /* 簡報模式控制項 */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            z-index: 60; /* 確保在最高層 */
-            border: none;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            background: rgba(0, 0, 0, 0.8);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .nav-btn:disabled {
-            background: rgba(0, 0, 0, 0.2);
-            color: rgba(255,255,255,0.3);
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .nav-prev { left: 20px; }
-        .nav-next { right: 20px; }
-
-        @media (max-width: 768px) {
-            .nav-btn {
-                width: 40px;
-                height: 40px;
-            }
-            .nav-prev { left: 10px; }
-            .nav-next { right: 10px; }
-        }
     </style>
 </head>
 <body class="text-gray-800 overflow-x-hidden relative">
@@ -151,14 +71,23 @@
     <div class="blob bg-blue-200 w-64 h-64 rounded-full bottom-0 left-20 mix-blend-multiply animate-blob animation-delay-4000"></div>
 
     <!-- 頁首 Hero Section -->
-    <header class="container mx-auto px-4 py-16 text-center max-w-4xl">
+    <header class="container mx-auto px-4 py-16 text-center max-w-6xl">
         <div class="inline-block bg-black text-white px-4 py-1 rounded-full text-sm font-bold mb-4 rotate-2 transform">
             🎨 115 學年度 (2026年)
         </div>
-        <h1 class="text-5xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
-            臺灣中區美術班<br>
-            <span class="title-gradient">甄選入學重點懶人包</span>
+        
+        <!-- 標題調整：分為兩行，並使用 vw 單位確保手機版自動縮放不換行 -->
+        <h1 class="font-black mb-6 tracking-tight leading-tight">
+            <!-- 第一行：字體設為 10vw (視窗寬度的10%)，在電腦版則固定為 text-6xl -->
+            <span class="block text-[10vw] sm:text-5xl md:text-6xl whitespace-nowrap">
+                臺灣中區美術班
+            </span>
+            <!-- 第二行：字體設為 8vw (視窗寬度的8%)，確保較長文字能塞入畫面 -->
+            <span class="block title-gradient text-[8vw] sm:text-5xl md:text-6xl whitespace-nowrap mt-1">
+                甄選入學重點懶人包
+            </span>
         </h1>
+
         <p class="text-xl text-gray-600 font-medium mb-8">
             苗栗 • 臺中 • 彰化 • 南投 • 雲林 • 嘉義
         </p>
@@ -414,84 +343,16 @@
         </div>
     </section>
 
-    <!-- PDF 簡報按鈕 Section -->
-    <section class="container mx-auto px-4 pb-12 max-w-4xl">
-        <div class="relative w-full h-64 rounded-3xl overflow-hidden card-shadow cursor-pointer pdf-trigger group" onclick="openSlideModal()">
-            <!-- 模糊背景層 -->
-            <div class="absolute inset-0 pdf-btn-bg"></div>
-            <!-- 遮罩層 -->
-            <div class="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all"></div>
-            <!-- 內容層 -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-white z-10 p-6 text-center">
-                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                    <i class="fa-solid fa-file-powerpoint text-3xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-2 text-shadow">招生策略簡報</h3>
-                <p class="text-sm md:text-base opacity-90 font-medium bg-black bg-opacity-40 px-4 py-1 rounded-full border border-white/30 backdrop-blur-sm">
-                    <i class="fa-solid fa-play mr-2 text-xs"></i>開啟簡報播放模式
-                </p>
-            </div>
-        </div>
+    <!-- 簡報連結按鈕 Section (更新版) -->
+    <section class="container mx-auto px-4 pb-12 max-w-4xl text-center">
+        <!-- 簡化後的按鈕 -->
+        <a href="https://drive.google.com/file/d/1qirItVlEdgRIAHKHTcM7WPI1bpk6YSdG/view?usp=drivesdk" 
+           target="_blank" 
+           class="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg transition-transform transform hover:scale-105 no-underline">
+            <i class="fa-solid fa-file-powerpoint mr-3"></i>
+            下載/觀看 招生策略簡報
+        </a>
     </section>
-
-    <!-- Slide Presentation Modal (Canvas Based) -->
-    <div id="slideModal" class="fixed inset-0 z-50 modal flex items-center justify-center">
-        <!-- 背景遮罩 (Z-index 50) -->
-        <div class="absolute inset-0 bg-black bg-opacity-95 backdrop-blur-md z-0" onclick="closeSlideModal()"></div>
-        
-        <!-- 頂部資訊列 (Z-index 60, pointer-events-auto) -->
-        <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-center text-white z-50 bg-gradient-to-b from-black/80 to-transparent">
-            <div class="flex items-center">
-                <i class="fa-solid fa-easel text-yellow-400 mr-3 text-xl"></i>
-                <span class="font-bold text-lg hidden md:inline">招生策略簡報</span>
-                <span id="page-num-display" class="ml-4 bg-white/20 px-3 py-1 rounded-full text-sm font-mono">-- / --</span>
-            </div>
-            <!-- 關閉按鈕 -->
-            <button onclick="closeSlideModal()" class="text-white hover:text-red-400 transition-colors p-2 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center hover:bg-white/20 cursor-pointer">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-        </div>
-
-        <!-- Canvas Container -->
-        <div class="relative w-full h-full flex items-center justify-center p-4 md:p-10 z-10 pointer-events-none">
-            
-            <!-- Canvas (Pointer Events Auto) -->
-            <canvas id="pdf-render" class="shadow-2xl max-w-full max-h-full rounded-md bg-white pointer-events-auto"></canvas>
-            
-            <!-- Loading Spinner / Error Message -->
-            <div id="loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-auto">
-                <div class="text-center">
-                    <i class="fa-solid fa-spinner fa-spin text-4xl mb-4"></i>
-                    <p class="text-lg">簡報載入中...</p>
-                </div>
-            </div>
-
-            <!-- Error Container (Hidden by default) -->
-            <div id="error-container" class="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-auto hidden">
-                <div class="text-center bg-gray-800 p-8 rounded-2xl max-w-md mx-4 shadow-xl border border-gray-700">
-                    <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-5xl mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">無法預覽簡報</h3>
-                    <p class="text-gray-400 mb-6 text-sm">可能是網路連線問題或檔案來源限制。<br>您可以直接下載檔案閱讀。</p>
-                    <div class="flex gap-4 justify-center">
-                        <a href="https://raw.githubusercontent.com/Xiaowei6636/art-entry-115/main/Central_Taiwan_Art_Admissions_115_Strategy.pdf" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-bold transition-colors">
-                            <i class="fa-solid fa-download mr-2"></i>下載簡報
-                        </a>
-                        <button onclick="closeSlideModal()" class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-2 rounded-full font-bold transition-colors">
-                            關閉
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <button id="prev-btn" class="nav-btn nav-prev pointer-events-auto" onclick="onPrevPage()">
-                <i class="fa-solid fa-chevron-left text-xl"></i>
-            </button>
-            <button id="next-btn" class="nav-btn nav-next pointer-events-auto" onclick="onNextPage()">
-                <i class="fa-solid fa-chevron-right text-xl"></i>
-            </button>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12 mt-12">
@@ -516,205 +377,7 @@
         </div>
     </footer>
 
-    <script>
-        // PDF.js Setup
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const pdfUrl = 'https://raw.githubusercontent.com/Xiaowei6636/art-entry-115/main/Central_Taiwan_Art_Admissions_115_Strategy.pdf';
-        
-        let pdfDoc = null;
-        let pageNum = 1;
-        let pageRendering = false;
-        let pageNumPending = null;
-        let scale = 1.5;
-        const canvas = document.getElementById('pdf-render');
-        const ctx = canvas.getContext('2d');
-        const modal = document.getElementById('slideModal');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const errorContainer = document.getElementById('error-container');
-
-        // Modal Controls
-        function openSlideModal() {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Reset state
-            errorContainer.classList.add('hidden');
-            loadingSpinner.style.display = 'flex';
-            canvas.style.display = 'block';
-            
-            if (!pdfDoc) {
-                loadPDF();
-            } else {
-                updateButtons(); // Ensure buttons update correctly when re-opening
-                renderPage(pageNum);
-            }
-        }
-
-        function closeSlideModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Load PDF with Timeout and Error Handling
-        async function loadPDF() {
-            updateButtons(); // Disable buttons initially
-            
-            // Set a timeout to show error if loading takes too long
-            const timeoutId = setTimeout(() => {
-                if (!pdfDoc) {
-                    showError();
-                }
-            }, 8000); // 8 seconds timeout
-
-            try {
-                const loadingTask = pdfjsLib.getDocument(pdfUrl);
-                pdfDoc = await loadingTask.promise;
-                clearTimeout(timeoutId);
-                
-                loadingSpinner.style.display = 'none';
-                updatePageInfo();
-                renderPage(pageNum);
-            } catch (error) {
-                console.error('Error loading PDF:', error);
-                clearTimeout(timeoutId);
-                showError();
-            }
-        }
-
-        function showError() {
-            loadingSpinner.style.display = 'none';
-            canvas.style.display = 'none';
-            errorContainer.classList.remove('hidden');
-            // Ensure nav buttons are hidden or disabled in error state
-            document.getElementById('prev-btn').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
-        }
-
-        // Render Page
-        async function renderPage(num) {
-            if (!pdfDoc) return; // Guard clause
-            
-            pageRendering = true;
-            
-            // Adjust scale based on screen size
-            const modalWidth = window.innerWidth * 0.9;
-            const modalHeight = window.innerHeight * 0.8;
-            
-            try {
-                const page = await pdfDoc.getPage(num);
-                
-                // Calculate scale to fit
-                const unscaledViewport = page.getViewport({scale: 1});
-                const scaleX = modalWidth / unscaledViewport.width;
-                const scaleY = modalHeight / unscaledViewport.height;
-                const fitScale = Math.min(scaleX, scaleY);
-                
-                const viewport = page.getViewport({scale: fitScale});
-                
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-                
-                const renderTask = page.render(renderContext);
-                await renderTask.promise;
-                pageRendering = false;
-                
-                if (pageNumPending !== null) {
-                    renderPage(pageNumPending);
-                    pageNumPending = null;
-                }
-            } catch (error) {
-                console.error('Page render error:', error);
-            }
-            
-            updateButtons();
-            updatePageInfo();
-        }
-
-        function queueRenderPage(num) {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        }
-
-        function onPrevPage() {
-            if (!pdfDoc || pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
-        }
-
-        function onNextPage() {
-            if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
-        }
-
-        function updateButtons() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
-            // Reset display if recovering from error
-            prevBtn.style.display = 'flex';
-            nextBtn.style.display = 'flex';
-
-            if (!pdfDoc) {
-                prevBtn.disabled = true;
-                nextBtn.disabled = true;
-                return;
-            }
-
-            prevBtn.disabled = pageNum <= 1;
-            nextBtn.disabled = pageNum >= pdfDoc.numPages;
-        }
-
-        function updatePageInfo() {
-            if(pdfDoc) {
-                document.getElementById('page-num-display').textContent = `${pageNum} / ${pdfDoc.numPages}`;
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (!modal.classList.contains('active')) return;
-            
-            if (event.key === 'ArrowLeft') onPrevPage();
-            if (event.key === 'ArrowRight') onNextPage();
-            if (event.key === 'Escape') closeSlideModal();
-        });
-
-        // Window resize handling
-        window.addEventListener('resize', () => {
-            if (pdfDoc && modal.classList.contains('active')) {
-                renderPage(pageNum);
-            }
-        });
-
-        // Touch Swipe Support
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        modal.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-        
-        modal.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, {passive: true});
-        
-        function handleSwipe() {
-            const threshold = 50;
-            if (touchEndX < touchStartX - threshold) onNextPage();
-            if (touchEndX > touchStartX + threshold) onPrevPage();
-        }
-
-    </script>
 </body>
 </html>
+
+
