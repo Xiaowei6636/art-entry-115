@@ -184,7 +184,7 @@
             <i class="fa-regular fa-calendar-check text-red-500 mr-2"></i>重要日程 (115年)
         </h2>
         <div class="relative border-l-4 border-gray-200 ml-4 md:ml-0 md:pl-0 space-y-8" id="timeline-container">
-            <div class="md:flex items-center group timeline-item" data-start="2026-02-23">
+            <div class="md:flex items-center group timeline-item" data-start="2026-02-23" data-end="2026-03-09">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-gray-500">2/23 - 3/9</h4>
                 </div>
@@ -198,7 +198,7 @@
                 </div>
             </div>
             
-            <div class="md:flex items-center group timeline-item" data-start="2026-03-19">
+            <div class="md:flex items-center group timeline-item" data-start="2026-03-19" data-end="2026-03-27">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-gray-500">3/19 - 3/27</h4>
                 </div>
@@ -212,7 +212,7 @@
                 </div>
             </div>
 
-            <div class="md:flex items-center group timeline-item" data-start="2026-04-18">
+            <div class="md:flex items-center group timeline-item" data-start="2026-04-18" data-end="2026-04-18">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-red-600">4/18 (六)</h4>
                 </div>
@@ -226,7 +226,7 @@
                 </div>
             </div>
             
-            <div class="md:flex items-center group timeline-item" data-start="2026-05-16">
+            <div class="md:flex items-center group timeline-item" data-start="2026-05-16" data-end="2026-05-17">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-gray-500">5/16 - 5/17</h4>
                 </div>
@@ -240,7 +240,7 @@
                 </div>
             </div>
             
-            <div class="md:flex items-center group timeline-item" data-start="2026-06-22">
+            <div class="md:flex items-center group timeline-item" data-start="2026-06-22" data-end="2026-06-26">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-gray-500">6/22 - 6/26</h4>
                 </div>
@@ -254,7 +254,7 @@
                 </div>
             </div>
             
-            <div class="md:flex items-center group timeline-item" data-start="2026-07-07">
+            <div class="md:flex items-center group timeline-item" data-start="2026-07-07" data-end="2026-07-07">
                 <div class="hidden md:block w-1/3 text-right pr-8">
                     <h4 class="text-lg font-bold text-gray-500">7/7</h4>
                 </div>
@@ -274,46 +274,82 @@
                 const items = Array.from(container.querySelectorAll('.timeline-item'));
                 const now = new Date(); 
                 
-                // 設定總時間軸範圍：2026/2/23 起至 2026/7/7 (含當天)
-                const timelineStart = new Date('2026-02-23T00:00:00');
-                const timelineEnd = new Date('2026-07-07T23:59:59');
+                // 取得今天日期的 YYYY-MM-DD 字串（忽略時間）
+                const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                
+                let todayMatch = false;
 
-                // 檢查現在時間是否在日程範圍內
-                if (now >= timelineStart && now <= timelineEnd) {
-                    const month = now.getMonth() + 1;
-                    const date = now.getDate();
-                    const dateStr = `${month}/${date}`;
-
-                    // 要插入的 HTML 節點字串
-                    const indicatorHTML = `
-                        <div class="md:flex items-center group relative h-4">
-                            <div class="hidden md:block w-1/3 text-right pr-8">
-                                <span class="text-xs font-bold text-gray-400">目前時間 (${dateStr})</span>
-                            </div>
-                            <div class="absolute left-[-12px] md:left-1/3 md:ml-[-12px] w-6 h-6 rounded-full border-2 border-gray-300 bg-[#fdfbf7] flex items-center justify-center z-10">
-                                <div class="w-2.5 h-2.5 bg-gray-400 rounded-full shadow-[0_0_8px_rgba(156,163,175,0.9)] animate-pulse"></div>
-                            </div>
-                            <div class="pl-8 md:pl-8 md:w-2/3">
-                                <span class="md:hidden font-bold text-gray-400 text-xs block">目前時間 (${dateStr})</span>
-                            </div>
-                        </div>
-                    `;
-
-                    let inserted = false;
+                // 檢查是否有事件包含「今天」
+                items.forEach(item => {
+                    const start = new Date(item.getAttribute('data-start') + 'T00:00:00').getTime();
+                    const end = new Date(item.getAttribute('data-end') + 'T23:59:59').getTime();
                     
-                    // 尋找應該插入的位置：只要現在時間小於該節點的起始時間，就插在該節點前面
-                    for (let i = 0; i < items.length; i++) {
-                        const itemStart = new Date(items[i].getAttribute('data-start') + 'T00:00:00');
-                        if (now < itemStart) {
-                            items[i].insertAdjacentHTML('beforebegin', indicatorHTML);
-                            inserted = true;
-                            break;
+                    if (now.getTime() >= start && now.getTime() <= end) {
+                        todayMatch = true;
+                        
+                        // 1. 將藍色外框移回圓點上 (使用者覺得這樣比較好看)
+                        const dot = item.querySelector('.absolute.rounded-full');
+                        if (dot) {
+                            dot.classList.remove('ring-2', 'ring-red-200', 'ring-blue-200', 'ring-orange-200', 'ring-gray-200');
+                            dot.classList.add('ring-4', 'ring-blue-500', 'animate-pulse', 'z-20');
+                        }
+
+                        // 2. 重新設計「今天」標籤位置，改為右上角懸浮標籤
+                        const h3 = item.querySelector('h3');
+                        const card = h3 ? h3.closest('div[class*="bg-"]') : null;
+
+                        if (card) {
+                            card.classList.add('scale-[1.02]', 'transition-all', 'z-10', 'relative', 'border-blue-300');
+                            
+                            if (!card.querySelector('.today-badge')) {
+                                card.style.overflow = 'visible'; // 確保標籤可以超出卡片
+                                card.insertAdjacentHTML('beforeend', `
+                                    <div class="today-badge absolute -top-3 -right-2 bg-blue-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-lg transform rotate-3 flex items-center gap-1 z-30 animate-[bounce_2s_infinite]">
+                                        <i class="fa-solid fa-location-dot"></i> 今日重點
+                                    </div>
+                                `);
+                            }
                         }
                     }
-                    
-                    // 如果到了放榜區間還沒結束，就放在最後面
-                    if (!inserted) {
-                         container.insertAdjacentHTML('beforeend', indicatorHTML);
+                });
+
+                // 如果「今天」不在任何事件區間內，則插入「目前時間」指示器
+                if (!todayMatch) {
+                    const timelineStart = new Date('2026-02-23T00:00:00');
+                    const timelineEnd = new Date('2026-07-07T23:59:59');
+
+                    if (now >= timelineStart && now <= timelineEnd) {
+                        const month = now.getMonth() + 1;
+                        const date = now.getDate();
+                        const dateStr = `${month}/${date}`;
+
+                        const indicatorHTML = `
+                            <div class="md:flex items-center group relative h-4 my-2">
+                                <div class="hidden md:block w-1/3 text-right pr-8">
+                                    <span class="text-xs font-bold text-gray-400">目前時間 (${dateStr})</span>
+                                </div>
+                                <div class="absolute left-[-12px] md:left-1/3 md:ml-[-12px] w-6 h-6 rounded-full border-2 border-gray-300 bg-[#fdfbf7] flex items-center justify-center z-10">
+                                    <div class="w-2.5 h-2.5 bg-gray-400 rounded-full shadow-[0_0_8px_rgba(156,163,175,0.9)] animate-pulse"></div>
+                                </div>
+                                <div class="pl-8 md:pl-8 md:w-2/3">
+                                    <span class="md:hidden font-bold text-gray-400 text-xs block">目前時間 (${dateStr})</span>
+                                </div>
+                            </div>
+                        `;
+
+                        let inserted = false;
+                        for (let i = 0; i < items.length; i++) {
+                            const itemStart = new Date(items[i].getAttribute('data-start') + 'T00:00:00');
+                            if (now < itemStart) {
+                                items[i].insertAdjacentHTML('beforebegin', indicatorHTML);
+                                inserted = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!inserted) {
+                             container.insertAdjacentHTML('beforeend', indicatorHTML);
+                        }
                     }
                 }
             });
