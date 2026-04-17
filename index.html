@@ -90,6 +90,48 @@
         </div>
     </header>
 
+    <!-- 倒數計時區塊 -->
+    <section id="countdown-section" class="container mx-auto px-4 py-4 max-w-5xl hidden opacity-0 transition-opacity duration-700">
+        <div class="bg-gradient-to-r from-red-500 via-orange-500 to-blue-500 p-[3px] rounded-3xl shadow-xl transform hover:scale-[1.01] transition-all duration-300">
+            <div class="bg-white rounded-[calc(1.5rem-1px)] p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+                <!-- 背景裝飾 -->
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gray-50 rounded-full opacity-50"></div>
+                
+                <div class="flex items-center gap-6 z-10">
+                    <div id="countdown-icon" class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center text-4xl shadow-inner border border-gray-100 animate-bounce">
+                        ⏳
+                    </div>
+                    <div>
+                        <h3 class="text-blue-600 font-bold text-sm mb-1 tracking-widest uppercase flex items-center gap-2">
+                            <span class="inline-block w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                            最近期程倒數
+                        </h3>
+                        <div id="countdown-event-name" class="text-2xl md:text-3xl font-black text-gray-800 leading-tight">
+                            載入中...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6 z-10">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-baseline gap-1">
+                            <span id="countdown-days" class="text-6xl md:text-7xl font-black title-gradient">00</span>
+                            <span class="text-xl font-bold text-gray-600">天</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-[0.3em] ml-1">Days Left</span>
+                    </div>
+                    
+                    <div class="h-16 w-[2px] bg-gray-100 hidden md:block mx-2"></div>
+                    
+                    <div class="bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:bg-black transition-colors flex flex-col items-center">
+                        <span class="text-xs text-gray-400 mb-1 font-normal">STATUS</span>
+                        <span id="countdown-status-text">倒數中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="container mx-auto px-4 py-12 max-w-5xl">
         <h2 class="text-3xl font-bold text-center mb-10">
             <i class="fa-solid fa-road text-blue-500 mr-2"></i>兩大入學管道
@@ -324,7 +366,7 @@
                         const dateStr = `${month}/${date}`;
 
                         const indicatorHTML = `
-                            <div class="md:flex items-center group relative h-4 my-2">
+                            <div class="md:flex items-center group relative h-4 my-2 current-time-indicator">
                                 <div class="hidden md:block w-1/3 text-right pr-8">
                                     <span class="text-xs font-bold text-gray-400">目前時間 (${dateStr})</span>
                                 </div>
@@ -352,8 +394,67 @@
                         }
                     }
                 }
+
+                // 倒數計時邏輯實作
+                const countdownEvents = [
+                    { name: '聯合術科測驗報名', date: '2026-02-23', icon: '📝' },
+                    { name: '競賽表現入學報名', date: '2026-03-19', icon: '🏆' },
+                    { name: '聯合術科測驗日', date: '2026-04-18', icon: '🎨' },
+                    { name: '國中教育會考', date: '2026-05-16', icon: '📚' },
+                    { name: '分發志願選填', date: '2026-06-22', icon: '🗳️' },
+                    { name: '聯合分發放榜', date: '2026-07-07', icon: '🎉' }
+                ];
+
+                window.initCountdown = function(testDate = null) {
+                    const now = testDate ? new Date(testDate) : new Date();
+                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    
+                    let upcoming = null;
+                    for (const event of countdownEvents) {
+                        const eventDate = new Date(event.date);
+                        if (eventDate >= today) {
+                            upcoming = event;
+                            break;
+                        }
+                    }
+
+                    const section = document.getElementById('countdown-section');
+                    if (!upcoming) {
+                        section.classList.add('hidden');
+                        return;
+                    }
+
+                    const targetDateParts = upcoming.date.split('-').map(Number);
+                    const targetDate = new Date(targetDateParts[0], targetDateParts[1] - 1, targetDateParts[2]);
+                    const diffTime = targetDate - today;
+                    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+                    // 更新 UI
+                    document.getElementById('countdown-event-name').textContent = upcoming.name;
+                    document.getElementById('countdown-days').textContent = diffDays.toString().padStart(2, '0');
+                    document.getElementById('countdown-icon').textContent = upcoming.icon;
+                    document.getElementById('countdown-status-text').textContent = diffDays === 0 ? '今日登場' : '準備中';
+                    
+                    section.classList.remove('hidden');
+                    setTimeout(() => section.classList.remove('opacity-0'), 100);
+                    
+                    if (testDate) {
+                        console.log(`[Countdown Test] Date: ${testDate}, Event: ${upcoming.name}, Days: ${diffDays}`);
+                    }
+                };
+
+                // 初始執行
+                initCountdown();
+
+                // 測試函數供 Console 使用
+                window.testCountdown = (dateString) => {
+                    console.clear();
+                    console.log(`%c 🧪 測試倒數邏輯：${dateString} `, 'background: #3b82f6; color: white; padding: 4px; border-radius: 4px;');
+                    window.initCountdown(dateString);
+                };
             });
         </script>
+
     </section>
 
     <section class="container mx-auto px-4 py-12 max-w-6xl">
