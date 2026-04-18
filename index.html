@@ -312,9 +312,24 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
+                const getNow = () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const debugTime = urlParams.get('debug_time');
+                    if (debugTime && /^\d{8}$/.test(debugTime)) {
+                        const year = debugTime.substring(0, 4);
+                        const month = debugTime.substring(4, 6);
+                        const day = debugTime.substring(6, 8);
+                        const date = new Date(`${year}-${month}-${day}T00:00:00`);
+                        if (!isNaN(date.getTime())) {
+                            return date;
+                        }
+                    }
+                    return new Date();
+                };
+
                 const container = document.getElementById('timeline-container');
                 const items = Array.from(container.querySelectorAll('.timeline-item'));
-                const now = new Date(); 
+                const now = getNow();
                 
                 // 取得今天日期的 YYYY-MM-DD 字串（忽略時間）
                 const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -406,7 +421,7 @@
                 ];
 
                 window.initCountdown = function(testDate = null) {
-                    const now = testDate ? new Date(testDate) : new Date();
+                    const now = testDate ? new Date(testDate) : getNow();
                     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
                     
                     let upcoming = null;
