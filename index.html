@@ -132,93 +132,117 @@
         </div>
     </section>
 
-    <section class="container mx-auto px-4 py-12 max-w-5xl">
-        <h2 class="text-3xl font-bold text-center mb-10">
-            <i class="fa-solid fa-road text-blue-500 mr-2"></i>兩大入學管道
-        </h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white border-l-8 border-blue-500 p-8 rounded-r-3xl card-shadow">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl font-bold mr-4">1</div>
-                    <h3 class="text-2xl font-bold">甄選入學 <span class="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded ml-2">主要管道</span></h3>
+    <!-- 已結束階段：兩大入學管道 & 術科測驗 -->
+    <section class="container mx-auto px-4 py-6 max-w-5xl">
+        <details class="group bg-gray-100/50 rounded-3xl border-2 border-dashed border-gray-200 transition-all overflow-hidden">
+            <summary class="flex items-center justify-between cursor-pointer p-4 sm:p-6 hover:bg-gray-100 transition-all list-none">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-2 sm:mr-4">
+                    <span class="inline-flex items-center bg-gray-400 text-white px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-xs font-black tracking-wider whitespace-nowrap flex-shrink-0">
+                        <i class="fa-solid fa-clock-rotate-left mr-1 sm:mr-1.5"></i> 已結束階段
+                    </span>
+                    <h3 class="w-full text-[13px] sm:text-base md:text-lg font-bold text-gray-500 truncate whitespace-nowrap">
+                        查看「兩大入學管道」及「術科測驗科目與權重」
+                    </h3>
                 </div>
-                <p class="text-gray-600 mb-4 font-medium">適合絕大多數考生，須參加術科考試。</p>
-                <ul class="space-y-3">
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
-                        <span>參加 <strong class="text-blue-600">聯合術科測驗</strong> (4/18)</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
-                        <span>參加 <strong class="text-blue-600">國中教育會考</strong> (5/16-17)</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
-                        <span>依術科及會考成績進行聯合分發</span>
-                    </li>
-                </ul>
-            </div>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-open:rotate-180 transition-transform duration-300 border border-gray-100 flex-shrink-0">
+                    <i class="fa-solid fa-chevron-down text-gray-400 text-xs sm:text-sm"></i>
+                </div>
+            </summary>
 
-            <div class="bg-white border-l-8 border-orange-500 p-8 rounded-r-3xl card-shadow">
-                <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-xl font-bold mr-4">2</div>
-                    <h3 class="text-2xl font-bold">競賽表現入學 <span class="text-sm bg-orange-100 text-orange-600 px-2 py-1 rounded ml-2">特殊優異</span></h3>
-                </div>
-                <p class="text-gray-600 mb-4 font-medium">適合在國中階段已有獲獎紀錄的學生。</p>
-                <ul class="space-y-3">
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-trophy text-orange-500 mt-1 mr-2"></i>
-                        <span>獲 <strong class="text-orange-600">全國性/國際性</strong> 美術比賽前三等獎</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-file-lines text-orange-500 mt-1 mr-2"></i>
-                        <span>僅需書面審查，通過即可安置</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fa-solid fa-circle-info text-gray-400 mt-1 mr-2"></i>
-                        <span class="text-gray-500 text-sm">若未錄取，仍可參加管道一的聯合分發</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+            <div class="px-6 pb-10 space-y-12 opacity-95 grayscale-[0.1]">
+                <div class="h-px bg-gray-200 mb-4"></div>
+                <!-- 兩大入學管道 -->
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-center mb-8 text-gray-600">
+                        <i class="fa-solid fa-road mr-2"></i>兩大入學管道
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white border-l-8 border-blue-400 p-8 rounded-r-3xl shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-400 text-xl font-bold mr-4">1</div>
+                                <h3 class="text-2xl font-bold text-gray-700">甄選入學</h3>
+                            </div>
+                            <p class="text-gray-500 mb-4 font-medium">適合絕大多數考生，須參加術科考試。</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-green-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-600">參加 <strong>聯合術科測驗</strong> (4/18)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-green-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-600">參加 <strong>國中教育會考</strong> (5/16-17)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-green-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-600">依術科及會考成績進行聯合分發</span>
+                                </li>
+                            </ul>
+                        </div>
 
-    <section class="container mx-auto px-4 py-12 max-w-5xl">
-        <h2 class="text-3xl font-bold text-center mb-10">
-            <i class="fa-solid fa-palette text-purple-500 mr-2"></i>術科測驗科目與權重
-        </h2>
-        <div class="bg-white rounded-3xl p-8 card-shadow border-2 border-gray-100">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl hover:bg-yellow-50 transition-colors">
-                    <div class="text-4xl mb-2">✏️</div>
-                    <h3 class="text-xl font-bold mb-1">素描</h3>
-                    <div class="text-sm text-gray-500 mb-3">120 分鐘</div>
-                    <div class="bg-yellow-400 text-black px-4 py-1 rounded-full font-bold text-lg">x 4.0</div>
+                        <div class="bg-white border-l-8 border-orange-400 p-8 rounded-r-3xl shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center text-orange-400 text-xl font-bold mr-4">2</div>
+                                <h3 class="text-2xl font-bold text-gray-700">競賽表現入學</h3>
+                            </div>
+                            <p class="text-gray-500 mb-4 font-medium">適合在國中階段已有獲獎紀錄的學生。</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-trophy text-orange-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-600">獲 <strong>全國性/國際性</strong> 美術比賽前三等獎</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-file-lines text-orange-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-600">僅需書面審查，通過即可安置</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-circle-info text-gray-400 mt-1 mr-2"></i>
+                                    <span class="text-gray-400 text-sm">若未錄取，仍可參加管道一的聯合分發</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl hover:bg-pink-50 transition-colors">
-                    <div class="text-4xl mb-2">🎨</div>
-                    <h3 class="text-xl font-bold mb-1">彩繪創作</h3>
-                    <div class="text-sm text-gray-500 mb-3">140 分鐘</div>
-                    <div class="bg-pink-400 text-white px-4 py-1 rounded-full font-bold text-lg">x 3.5</div>
-                    <div class="text-xs text-pink-500 mt-2">含實作與紙筆</div>
-                </div>
-                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition-colors">
-                    <div class="text-4xl mb-2">🖌️</div>
-                    <h3 class="text-xl font-bold mb-1">水墨</h3>
-                    <div class="text-sm text-gray-500 mb-3">100 分鐘</div>
-                    <div class="bg-blue-400 text-white px-4 py-1 rounded-full font-bold text-lg">x 2.5</div>
-                </div>
-                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl hover:bg-gray-200 transition-colors">
-                    <div class="text-4xl mb-2">✒️</div>
-                    <h3 class="text-xl font-bold mb-1">書法</h3>
-                    <div class="text-sm text-gray-500 mb-3">50 分鐘</div>
-                    <div class="bg-gray-600 text-white px-4 py-1 rounded-full font-bold text-lg">x 1.0</div>
+
+                <!-- 術科測驗科目與權重 -->
+                <div class="relative">
+                    <h2 class="text-2xl font-bold text-center mb-8 text-gray-600">
+                        <i class="fa-solid fa-palette mr-2"></i>術科測驗科目與權重
+                    </h2>
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                            <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl">
+                                <div class="text-4xl mb-2 grayscale-[0.5]">✏️</div>
+                                <h3 class="text-xl font-bold mb-1 text-gray-600">素描</h3>
+                                <div class="text-sm text-gray-400 mb-3">120 分鐘</div>
+                                <div class="bg-gray-200 text-gray-600 px-4 py-1 rounded-full font-bold text-lg">x 4.0</div>
+                            </div>
+                            <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl">
+                                <div class="text-4xl mb-2 grayscale-[0.5]">🎨</div>
+                                <h3 class="text-xl font-bold mb-1 text-gray-600">彩繪創作</h3>
+                                <div class="text-sm text-gray-400 mb-3">140 分鐘</div>
+                                <div class="bg-gray-200 text-gray-600 px-4 py-1 rounded-full font-bold text-lg">x 3.5</div>
+                                <div class="text-xs text-gray-400 mt-2">含實作與紙筆</div>
+                            </div>
+                            <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl">
+                                <div class="text-4xl mb-2 grayscale-[0.5]">🖌️</div>
+                                <h3 class="text-xl font-bold mb-1 text-gray-600">水墨</h3>
+                                <div class="text-sm text-gray-400 mb-3">100 分鐘</div>
+                                <div class="bg-gray-200 text-gray-600 px-4 py-1 rounded-full font-bold text-lg">x 2.5</div>
+                            </div>
+                            <div class="flex flex-col items-center p-4 bg-gray-50 rounded-2xl">
+                                <div class="text-4xl mb-2 grayscale-[0.5]">✒️</div>
+                                <h3 class="text-xl font-bold mb-1 text-gray-600">書法</h3>
+                                <div class="text-sm text-gray-400 mb-3">50 分鐘</div>
+                                <div class="bg-gray-200 text-gray-600 px-4 py-1 rounded-full font-bold text-lg">x 1.0</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center text-gray-400 text-sm">
+                            <i class="fa-solid fa-circle-exclamation mr-1"></i> 考試日期：115年4月18日 (星期六) | 地點：國立斗六高中
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-6 text-center text-gray-500 text-sm">
-                <i class="fa-solid fa-circle-exclamation mr-1"></i> 考試日期：115年4月18日 (星期六) | 地點：國立斗六高中
-            </div>
-        </div>
+        </details>
     </section>
 
     <section class="container mx-auto px-4 py-12 max-w-4xl">
