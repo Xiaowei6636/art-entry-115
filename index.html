@@ -58,6 +58,25 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* 時間軸軸線修正 */
+        .timeline-axis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 4px;
+            background-color: #e5e7eb; /* gray-200 */
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-axis::before {
+                left: 33.333333%;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-800 overflow-x-hidden relative">
@@ -249,7 +268,7 @@
         <h2 class="text-3xl font-bold text-center mb-10">
             <i class="fa-regular fa-calendar-check text-red-500 mr-2"></i>重要日程 (115年)
         </h2>
-        <div class="relative border-l-4 border-gray-200 ml-4 md:ml-0 md:pl-0 space-y-8" id="timeline-container">
+        <div class="relative ml-4 md:ml-0 md:pl-0 space-y-8 timeline-axis" id="timeline-container">
             <!-- 由 JavaScript 動態生成時程表項目 -->
         </div>
         </div>
